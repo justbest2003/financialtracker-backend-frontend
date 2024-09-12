@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 {
   "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
 }
-=======
-{
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
-}
->>>>>>> 1e92731cf6f0ef94ed3e8190d440b4da18d8f9e6
+
