@@ -4,16 +4,16 @@ const app = express();
 const financialRouter = require("./router/financial.router");
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
+const frontend_url = process.env.FRONTEND_URL;
 const cors = require("cors");
 const corsOptions = {
-    origin : "http://localhost:5173"
+  origin: frontend_url,
 };
 
 //use Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded
-({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("<h1>Hello Financial Tracker API</h1>");
@@ -21,7 +21,6 @@ app.get("/", (req, res) => {
 
 //use Router
 app.use("/api/v1/financial", financialRouter);
-
 
 app.listen(PORT, () => {
   console.log("Listening to http://localhost:" + PORT);

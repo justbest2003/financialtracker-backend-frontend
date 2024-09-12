@@ -2,10 +2,11 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 import { useFinancialRecords } from "../../contexts/financial.context";
 import { useUser } from "@clerk/clerk-react";
+import { format, parse } from "date-fns";
 
 const AddRecordForm = () => {
   const { user } = useUser();
-  const { addRecord } = useFinancialRecords(); // Use the context to access addRecord
+  const { addRecord } = useFinancialRecords();
 
   const [financials, setFinancials] = useState({
     description: "",
@@ -24,7 +25,11 @@ const AddRecordForm = () => {
     e.preventDefault();
 
     try {
-      await addRecord({ ...financials, userId: user.id });
+      const formattedDate = format(
+        parse(financials.date, "dd/MM/yyyy", new Date()),
+        "yyyy-MM-dd"
+      );
+      await addRecord({ ...financials, date: formattedDate, userId: user.id });
       Swal.fire({
         title: "Add Financial Record!",
         text: "Financial record has been added successfully.",
@@ -86,8 +91,8 @@ const AddRecordForm = () => {
               <span className="label-text">Date : </span>
             </label>
             <input
-              type="date"
-              placeholder="วันที่"
+              type="text"
+              placeholder="วันที่ (DD/MM/YYYY)"
               className="input input-bordered"
               required
               name="date"
